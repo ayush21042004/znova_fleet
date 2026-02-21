@@ -254,6 +254,16 @@ const getRelationOptions = (columnName: string): any[] => {
 };
 
 const addNewLine = () => {
+  // Ensure metadata is loaded before adding a line
+  if (!relatedModelMetadata.value) {
+    console.warn('Related model metadata not loaded yet. Attempting to load...');
+    loadRelatedModelMetadata().then(() => {
+      // Retry after metadata loads
+      addNewLine();
+    });
+    return;
+  }
+
   const newRecord: any = {
     _tempId: `temp-${tempIdCounter++}`,
     _isNew: true

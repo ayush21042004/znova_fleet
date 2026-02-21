@@ -105,8 +105,22 @@ router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth && !isAuthenticated.value) {
         next('/login');
     } else if (to.meta.guest && isAuthenticated.value) {
-        // If user is authenticated and tries to access guest pages, redirect to dashboard
-        next('/dashboard');
+        // If user is authenticated and tries to access guest pages
+        // Redirect based on role
+        const userRole = userStore.userData?.role?.name;
+        if (userRole === 'financial_analyst') {
+            next('/analytics');
+        } else {
+            next('/dashboard');
+        }
+    } else if (to.path === '/dashboard' && isAuthenticated.value) {
+        // If financial analyst tries to access dashboard, redirect to analytics
+        const userRole = userStore.userData?.role?.name;
+        if (userRole === 'financial_analyst') {
+            next('/analytics');
+        } else {
+            next();
+        }
     } else {
         next();
     }

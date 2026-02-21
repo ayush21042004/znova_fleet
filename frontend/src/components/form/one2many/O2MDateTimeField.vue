@@ -1,5 +1,5 @@
 <template>
-  <div class="o2m-field-wrapper">
+  <div class="o2m-field-wrapper" :class="{ 'is-readonly': readonly }">
     <DateTimeField
       :model-value="modelValue"
       :readonly="readonly"
@@ -27,6 +27,13 @@ defineEmits(['update:modelValue']);
   width: 100%;
   padding: 0 12px;
   position: relative;
+}
+
+/* Faded color for readonly datetime fields */
+.o2m-field-wrapper.is-readonly :deep(.p-datepicker-input),
+.o2m-field-wrapper.is-readonly :deep(.custom-prime-input) {
+  color: rgba(107, 114, 128, 0.75) !important; /* Faded gray */
+  opacity: 0.85;
 }
 
 /* Hide the date picker icon in table context */

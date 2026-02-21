@@ -591,6 +591,46 @@ def process_field_change(
             'new_value': new_value_display
         }
     
+    # For numeric fields (float/integer), normalize for comparison
+    elif field_type in ("float", "integer"):
+        # Normalize old value
+        old_normalized = None
+        if old_value is not None:
+            try:
+                if field_type == "float":
+                    old_normalized = float(old_value)
+                else:
+                    old_normalized = int(old_value)
+            except (ValueError, TypeError):
+                old_normalized = old_value
+        
+        # Normalize new value
+        new_normalized = None
+        if new_value is not None:
+            try:
+                if field_type == "float":
+                    new_normalized = float(new_value)
+                else:
+                    new_normalized = int(new_value)
+            except (ValueError, TypeError):
+                new_normalized = new_value
+        
+        # Compare normalized values
+        if old_normalized == new_normalized:
+            return None
+        
+        # Format for display
+        old_value_display = format_value_for_audit(old_normalized if old_normalized is not None else old_value, field_type, field_meta)
+        new_value_display = format_value_for_audit(new_normalized if new_normalized is not None else new_value, field_type, field_meta)
+        
+        return {
+            'field_name': field_name,
+            'field_label': field_label,
+            'field_type': field_type,
+            'old_value': old_value_display,
+            'new_value': new_value_display
+        }
+    
     else:
         # For other field types, format and return
         old_value_display = format_value_for_audit(old_value, field_type, field_meta)

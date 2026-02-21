@@ -80,8 +80,8 @@
       </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="cc-main-grid">
+    <!-- Main Content - Full Width -->
+    <div class="cc-main-content">
       <!-- Active Trips Table -->
       <div class="cc-card cc-table-card">
         <div class="cc-card-header">
@@ -152,133 +152,133 @@
           <router-link to="/models/fleet.trip" class="cc-footer-link">View All →</router-link>
         </div>
       </div>
+    </div>
 
-      <!-- Sidebar -->
-      <div class="cc-sidebar">
-        <!-- Fleet Distribution -->
-        <div class="cc-card">
-          <div class="cc-card-header">
-            <h3 class="cc-card-title">Fleet Distribution</h3>
-            <span class="cc-card-icon">📊</span>
-          </div>
-          
-          <div class="cc-card-body">
-            <div class="cc-dist-list">
-              <div v-for="status in statusDistribution" :key="status.name" class="cc-dist-item">
-                <div class="cc-dist-header">
-                  <span class="cc-dist-label">{{ status.name }}</span>
-                  <span class="cc-dist-value">{{ status.count }} Units</span>
-                </div>
-                <div class="cc-progress-bar-wrapper">
-                  <div 
-                    class="cc-progress-bar-fill" 
-                    :class="`cc-progress-${status.name.toLowerCase().replace(' ', '-')}`"
-                    :style="{ width: status.percentage + '%' }"
-                  ></div>
-                </div>
+    <!-- Distribution Cards Grid -->
+    <div class="cc-distribution-grid">
+      <!-- Fleet Distribution -->
+      <div class="cc-card cc-card-compact">
+        <div class="cc-card-header">
+          <h3 class="cc-card-title">Fleet Distribution</h3>
+          <span class="cc-card-icon">📊</span>
+        </div>
+        
+        <div class="cc-card-body">
+          <div class="cc-dist-list">
+            <div v-for="status in statusDistribution" :key="status.name" class="cc-dist-item">
+              <div class="cc-dist-header">
+                <span class="cc-dist-label">{{ status.name }}</span>
+                <span class="cc-dist-value">{{ status.count }} Units</span>
+              </div>
+              <div class="cc-progress-bar-wrapper">
+                <div 
+                  class="cc-progress-bar-fill" 
+                  :class="`cc-progress-${status.name.toLowerCase().replace(' ', '-')}`"
+                  :style="{ width: status.percentage + '%' }"
+                ></div>
               </div>
             </div>
+          </div>
 
-            <div class="cc-stats-grid">
-              <div class="cc-stat">
-                <div class="cc-stat-value">{{ stats.avgMilesPerDay }}</div>
-                <div class="cc-stat-label">AVG MILES/DAY</div>
+          <div class="cc-stats-grid">
+            <div class="cc-stat">
+              <div class="cc-stat-value">{{ stats.avgMilesPerDay }}</div>
+              <div class="cc-stat-label">AVG MILES/DAY</div>
+            </div>
+            <div class="cc-stat-divider"></div>
+            <div class="cc-stat">
+              <div class="cc-stat-value">{{ stats.onTimeRate }}%</div>
+              <div class="cc-stat-label">ON-TIME RATE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vehicle Type Distribution -->
+      <div class="cc-card cc-card-compact">
+        <div class="cc-card-header">
+          <h3 class="cc-card-title">By Vehicle Type</h3>
+          <span class="cc-card-icon">🚛</span>
+        </div>
+        
+        <div class="cc-card-body">
+          <div class="cc-dist-list">
+            <div v-for="type in vehicleTypeDistribution" :key="type.name" class="cc-dist-item">
+              <div class="cc-dist-header">
+                <span class="cc-dist-label">{{ type.name }}</span>
+                <span class="cc-dist-value">{{ type.count }} Units</span>
               </div>
-              <div class="cc-stat-divider"></div>
-              <div class="cc-stat">
-                <div class="cc-stat-value">{{ stats.onTimeRate }}%</div>
-                <div class="cc-stat-label">ON-TIME RATE</div>
+              <div class="cc-progress-bar-wrapper">
+                <div 
+                  class="cc-progress-bar-fill" 
+                  :class="`cc-progress-${type.name.toLowerCase()}`"
+                  :style="{ width: type.percentage + '%' }"
+                ></div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Vehicle Type Distribution -->
-        <div class="cc-card">
-          <div class="cc-card-header">
-            <h3 class="cc-card-title">By Vehicle Type</h3>
-            <span class="cc-card-icon">🚛</span>
-          </div>
-          
-          <div class="cc-card-body">
-            <div class="cc-dist-list">
-              <div v-for="type in vehicleTypeDistribution" :key="type.name" class="cc-dist-item">
-                <div class="cc-dist-header">
-                  <span class="cc-dist-label">{{ type.name }}</span>
-                  <span class="cc-dist-value">{{ type.count }} Units</span>
-                </div>
-                <div class="cc-progress-bar-wrapper">
-                  <div 
-                    class="cc-progress-bar-fill" 
-                    :class="`cc-progress-${type.name.toLowerCase()}`"
-                    :style="{ width: type.percentage + '%' }"
-                  ></div>
-                </div>
+      <!-- Region Distribution -->
+      <div class="cc-card cc-card-compact">
+        <div class="cc-card-header">
+          <h3 class="cc-card-title">By Region</h3>
+          <span class="cc-card-icon">🗺️</span>
+        </div>
+        
+        <div class="cc-card-body">
+          <div class="cc-dist-list">
+            <div v-for="region in regionDistribution" :key="region.name" class="cc-dist-item">
+              <div class="cc-dist-header">
+                <span class="cc-dist-label">{{ region.name }}</span>
+                <span class="cc-dist-value">{{ region.count }} Units</span>
+              </div>
+              <div class="cc-progress-bar-wrapper">
+                <div 
+                  class="cc-progress-bar-fill" 
+                  :class="`cc-progress-${region.name.toLowerCase()}`"
+                  :style="{ width: region.percentage + '%' }"
+                ></div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Region Distribution -->
-        <div class="cc-card">
-          <div class="cc-card-header">
-            <h3 class="cc-card-title">By Region</h3>
-            <span class="cc-card-icon">🗺️</span>
-          </div>
-          
-          <div class="cc-card-body">
-            <div class="cc-dist-list">
-              <div v-for="region in regionDistribution" :key="region.name" class="cc-dist-item">
-                <div class="cc-dist-header">
-                  <span class="cc-dist-label">{{ region.name }}</span>
-                  <span class="cc-dist-value">{{ region.count }} Units</span>
-                </div>
-                <div class="cc-progress-bar-wrapper">
-                  <div 
-                    class="cc-progress-bar-fill" 
-                    :class="`cc-progress-${region.name.toLowerCase()}`"
-                    :style="{ width: region.percentage + '%' }"
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- Quick Actions -->
+      <div class="cc-card cc-card-compact">
+        <div class="cc-card-header">
+          <h3 class="cc-card-title">Quick Actions</h3>
         </div>
+        <div class="cc-card-body">
+          <div class="cc-actions-list">
+            <a href="#" @click.prevent="handleQuickAction('fleet.vehicle')" class="cc-action">
+              <div class="cc-action-icon cc-action-primary">🚛</div>
+              <div class="cc-action-content">
+                <div class="cc-action-title">Add Vehicle</div>
+                <div class="cc-action-desc">Register new vehicle</div>
+              </div>
+              <span class="cc-action-arrow">›</span>
+            </a>
 
-        <!-- Quick Actions -->
-        <div class="cc-card">
-          <div class="cc-card-header">
-            <h3 class="cc-card-title">Quick Actions</h3>
-          </div>
-          <div class="cc-card-body">
-            <div class="cc-actions-list">
-              <a href="#" @click.prevent="handleQuickAction('fleet.vehicle')" class="cc-action">
-                <div class="cc-action-icon cc-action-primary">🚛</div>
-                <div class="cc-action-content">
-                  <div class="cc-action-title">Add Vehicle</div>
-                  <div class="cc-action-desc">Register new vehicle</div>
-                </div>
-                <span class="cc-action-arrow">›</span>
-              </a>
+            <a href="#" @click.prevent="handleQuickAction('fleet.maintenance.log')" class="cc-action">
+              <div class="cc-action-icon cc-action-warning">🔧</div>
+              <div class="cc-action-content">
+                <div class="cc-action-title">Log Maintenance</div>
+                <div class="cc-action-desc">Record service</div>
+              </div>
+              <span class="cc-action-arrow">›</span>
+            </a>
 
-              <a href="#" @click.prevent="handleQuickAction('fleet.maintenance.log')" class="cc-action">
-                <div class="cc-action-icon cc-action-warning">🔧</div>
-                <div class="cc-action-content">
-                  <div class="cc-action-title">Log Maintenance</div>
-                  <div class="cc-action-desc">Record service</div>
-                </div>
-                <span class="cc-action-arrow">›</span>
-              </a>
-
-              <a href="#" @click.prevent="handleQuickAction('fleet.expense')" class="cc-action">
-                <div class="cc-action-icon cc-action-success">💰</div>
-                <div class="cc-action-content">
-                  <div class="cc-action-title">Add Expense</div>
-                  <div class="cc-action-desc">Track costs</div>
-                </div>
-                <span class="cc-action-arrow">›</span>
-              </a>
-            </div>
+            <a href="#" @click.prevent="handleQuickAction('fleet.expense')" class="cc-action">
+              <div class="cc-action-icon cc-action-success">💰</div>
+              <div class="cc-action-content">
+                <div class="cc-action-title">Add Expense</div>
+                <div class="cc-action-desc">Track costs</div>
+              </div>
+              <span class="cc-action-arrow">›</span>
+            </a>
           </div>
         </div>
       </div>
@@ -830,16 +830,28 @@ onMounted(() => {
   color: #fff;
 }
 
-/* Main Grid */
-.cc-main-grid {
+/* Main Content - Full Width */
+.cc-main-content {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+/* Distribution Grid - Horizontal Layout */
+.cc-distribution-grid {
   display: grid;
-  grid-template-columns: 1fr 380px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
+.cc-card-compact {
+  .cc-card-body {
+    padding: 1rem;
+  }
+}
+
 @media (max-width: 1280px) {
-  .cc-main-grid {
-    grid-template-columns: 1fr;
+  .cc-distribution-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }
 

@@ -8,37 +8,44 @@ class Driver(ZnovaModel):
     _name_field_ = "name"
     _description_ = "Fleet Driver"
 
-    name = fields.Char(label="Driver Name", required=True, tracking=True)
-    license_number = fields.Char(label="License Number", required=True, tracking=True)
-    license_expiry = fields.Date(label="License Expiry Date", required=True, tracking=True)
-    phone = fields.Char(label="Phone Number", tracking=True)
+    name = fields.Char(label="Driver Name", required=True, tracking=True, help="Full name of the driver")
+    license_number = fields.Char(label="License Number", required=True, tracking=True,
+                                 help="Driver's license identification number")
+    license_expiry = fields.Date(label="License Expiry Date", required=True, tracking=True,
+                                 help="License expiration date (blocks assignment if expired)")
+    phone = fields.Char(label="Phone Number", tracking=True, help="Contact phone number")
     
     status = fields.Selection([
         ('on_duty', 'On Duty'),
         ('off_duty', 'Off Duty'),
         ('suspended', 'Suspended')
-    ], label="Status", default='off_duty', tracking=True, options={
+    ], label="Status", default='off_duty', tracking=True, readonly=True, options={
         'on_duty': {'label': 'On Duty', 'color': 'success'},
         'off_duty': {'label': 'Off Duty', 'color': 'info'},
         'suspended': {'label': 'Suspended', 'color': 'danger'}
-    })
+    }, help="Current duty status (auto-updated by system)")
     
-    safety_score = fields.Float(label="Safety Score", default=100.0, tracking=True)
+    safety_score = fields.Float(label="Safety Score", default=100.0, tracking=True,
+                                help="Driver safety rating (0-100)")
     
     # Relationships
-    trip_ids = fields.One2many("fleet.trip", "driver_id", label="Trips")
+    trip_ids = fields.One2many("fleet.trip", "driver_id", label="Trips",
+                              columns=["name", "vehicle_id", "origin", "destination", "distance", "status"],
+                              show_label=False, readonly=True)
     
     # Computed fields
     total_trips = fields.Integer(label="Total Trips", compute="_compute_stats", store=False)
+    completed_trips = fields.Integer(label="Completed Trips", compute="_compute_stats", store=False)
+    completion_rate = fields.Float(label="Completion Rate (%)", compute="_compute_stats", store=False, help="Percentage of trips completed successfully")
     license_expired = fields.Boolean(label="License Expired", compute="_compute_license_status", store=False)
     
     active = fields.Boolean(label="Active", default=True, tracking=True)
 
     _role_permissions = {
         "fleet_manager": {"create": True, "read": True, "write": True, "delete": True},
-        "dispatcher": {"create": False, "read": True, "write": True, "delete": False},
+        "dispatcher": {"create": False, "read": True, "write": False, "delete": False},
         "safety_officer": {"create": False, "read": True, "write": True, "delete": False},
-        "financial_analyst": {"create": False, "read": True, "write": False, "delete": False}
+        "financial_analyst": {"create": False, "read": False, "write": False, "delete": False}
     }
 
     _search_config = {
@@ -85,7 +92,7 @@ class Driver(ZnovaModel):
                     "groups": [
                         {
                             "title": "Driver Information",
-                            "fields": ["name", "phone", "status", "active"]
+                            "fields": ["name", "phone", "active"]
                         },
                         {
                             "title": "License Details",
@@ -93,7 +100,7 @@ class Driver(ZnovaModel):
                         },
                         {
                             "title": "Performance",
-                            "fields": ["safety_score", "total_trips"]
+                            "fields": ["safety_score", "total_trips", "completed_trips", "completion_rate"]
                         }
                     ]
                 },
@@ -123,18 +130,69 @@ class Driver(ZnovaModel):
 
     @api.depends('trip_ids')
     def _compute_stats(self):
-        self.total_trips = len(self.trip_ids) if self.trip_ids else 0
+        """Compute basic statistics from related records"""
+        # Handle None or empty trip_ids
+        if not self.trip_ids:
+            self.total_trips = 0
+            self.completed_trips = 0
+            self.completion_rate = 0.0
+            return
+            
+        self.total_trips = len(self.trip_ids)
+        
+        # Count completed trips
+        completed = [t for t in self.trip_ids if hasattr(t, 'status') and t.status == 'completed']
+        self.completed_trips = len(completed)
+        
+        # Calculate completion rate
+        if self.total_trips > 0:
+            self.completion_rate = round((self.completed_trips / self.total_trips) * 100, 2)
+        else:
+            self.completion_rate = 0.0
 
     @api.depends('license_expiry')
     def _compute_license_status(self):
-        if self.license_expiry:
-            self.license_expired = datetime.strptime(str(self.license_expiry), '%Y-%m-%d').date() < datetime.now().date()
-        else:
+        """Compute license expiration status"""
+        # Handle None or missing license_expiry
+        if not self.license_expiry:
+            self.license_expired = False
+            return
+            
+        try:
+            expiry_date = datetime.strptime(str(self.license_expiry), '%Y-%m-%d').date()
+            self.license_expired = expiry_date < datetime.now().date()
+        except (ValueError, AttributeError):
             self.license_expired = False
 
     def action_suspend(self):
         """Suspend the driver"""
         self.write({'status': 'suspended'})
+        
+        # Send notifications
+        from backend.core.notification_helper import notify_fleet_managers, notify_safety_officers
+        from sqlalchemy.orm import object_session
+        
+        db = object_session(self)
+        if db:
+            # Notify fleet managers and safety officers
+            notify_fleet_managers(
+                db,
+                title="Driver Suspended",
+                message=f"Driver {self.name} has been suspended and cannot be assigned to trips.",
+                notification_type="danger",
+                action_type="navigate",
+                action_target=f"/models/fleet.driver/{self.id}"
+            )
+            
+            notify_safety_officers(
+                db,
+                title="Driver Status Change",
+                message=f"Driver {self.name} has been suspended. Review required.",
+                notification_type="warning",
+                action_type="navigate",
+                action_target=f"/models/fleet.driver/{self.id}"
+            )
+        
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",

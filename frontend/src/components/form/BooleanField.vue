@@ -18,12 +18,14 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  modelValue: boolean;
+const props = withDefaults(defineProps<{
+  modelValue: boolean | null;
   readonly?: boolean;
   invalid?: boolean;
   label?: string;
-}>();
+}>(), {
+  modelValue: false
+});
 
 const emit = defineEmits(['update:modelValue']);
 

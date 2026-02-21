@@ -9,7 +9,9 @@ class Expense(ZnovaModel):
     _description_ = "Fleet Expense"
 
     name = fields.Char(label="Reference", required=True, tracking=True)
-    vehicle_id = fields.Many2one("fleet.vehicle", label="Vehicle", required=True, tracking=True)
+    vehicle_id = fields.Many2one("fleet.vehicle", label="Vehicle", required=True, tracking=True,
+                                 domain="[('active', '=', True)]",
+                                 help="Select vehicle for expense tracking")
     
     expense_type = fields.Selection([
         ('fuel', 'Fuel'),
@@ -19,20 +21,25 @@ class Expense(ZnovaModel):
     ], label="Expense Type", required=True, default='fuel', tracking=True)
     
     expense_date = fields.Date(label="Expense Date", required=True, tracking=True)
-    cost = fields.Float(label="Cost", required=True, tracking=True)
+    cost = fields.Float(label="Cost ($)", required=True, tracking=True, help="Total cost of expense")
     
-    # Fuel-specific fields
-    fuel_liters = fields.Float(label="Fuel Quantity (Liters)", tracking=True)
-    odometer_reading = fields.Float(label="Odometer Reading (km)", tracking=True)
+    # Fuel-specific fields - only visible/required when expense_type is 'fuel'
+    fuel_liters = fields.Float(label="Fuel Quantity (Liters)", tracking=True,
+                               invisible="[('expense_type', '!=', 'fuel')]",
+                               required="[('expense_type', '=', 'fuel')]",
+                               help="Required for fuel expenses")
+    odometer_reading = fields.Float(label="Odometer Reading (km)", tracking=True,
+                                    invisible="[('expense_type', '!=', 'fuel')]",
+                                    help="Vehicle odometer at time of fueling")
     
     description = fields.Text(label="Description")
     notes = fields.Text(label="Notes")
 
     _role_permissions = {
         "fleet_manager": {"create": True, "read": True, "write": True, "delete": True},
-        "dispatcher": {"create": True, "read": True, "write": False, "delete": False},
-        "safety_officer": {"create": False, "read": True, "write": False, "delete": False},
-        "financial_analyst": {"create": False, "read": True, "write": True, "delete": False}
+        "dispatcher": {"create": False, "read": False, "write": False, "delete": False},
+        "safety_officer": {"create": False, "read": False, "write": False, "delete": False},
+        "financial_analyst": {"create": False, "read": True, "write": False, "delete": False}
     }
 
     _search_config = {

@@ -414,6 +414,10 @@ class BaseModel(Base):
             if field_type in ("one2many", "many2many"):
                 continue
             
+            # Skip computed fields that are not stored (store=False)
+            if field_meta.get("compute") and not field_meta.get("store", True):
+                continue
+            
             # Skip if not a column or recognized field (simple check)
             # Actually, we should probably allow properties that have setters, 
             # allowing the model to handle them in __init__ if custom logic exists.

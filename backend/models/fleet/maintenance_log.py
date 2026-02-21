@@ -9,7 +9,9 @@ class MaintenanceLog(ZnovaModel):
     _description_ = "Fleet Maintenance Log"
 
     name = fields.Char(label="Reference", required=True, tracking=True)
-    vehicle_id = fields.Many2one("fleet.vehicle", label="Vehicle", required=True, tracking=True)
+    vehicle_id = fields.Many2one("fleet.vehicle", label="Vehicle", required=True, tracking=True,
+                                 domain="[('active', '=', True)]",
+                                 help="Select vehicle for maintenance")
     
     service_type = fields.Selection([
         ('routine', 'Routine Maintenance'),
@@ -18,18 +20,20 @@ class MaintenanceLog(ZnovaModel):
         ('tire_change', 'Tire Change'),
         ('oil_change', 'Oil Change'),
         ('other', 'Other')
-    ], label="Service Type", required=True, tracking=True)
+    ], label="Service Type", required=True, tracking=True,
+       help="Repair and Routine will set vehicle status to 'In Shop'")
     
     service_date = fields.Date(label="Service Date", required=True, tracking=True)
-    cost = fields.Float(label="Cost", required=True, tracking=True)
-    odometer_reading = fields.Float(label="Odometer Reading (km)", tracking=True)
+    cost = fields.Float(label="Cost ($)", required=True, tracking=True, help="Total maintenance cost")
+    odometer_reading = fields.Float(label="Odometer Reading (km)", tracking=True,
+                                    help="Vehicle odometer at time of service")
     
-    description = fields.Text(label="Description")
-    notes = fields.Text(label="Notes")
+    description = fields.Text(label="Description", help="Describe the maintenance work performed")
+    notes = fields.Text(label="Notes", help="Additional notes or observations")
 
     _role_permissions = {
         "fleet_manager": {"create": True, "read": True, "write": True, "delete": True},
-        "dispatcher": {"create": True, "read": True, "write": False, "delete": False},
+        "dispatcher": {"create": False, "read": False, "write": False, "delete": False},
         "safety_officer": {"create": True, "read": True, "write": True, "delete": False},
         "financial_analyst": {"create": False, "read": True, "write": False, "delete": False}
     }
@@ -96,11 +100,34 @@ class MaintenanceLog(ZnovaModel):
 
     @classmethod
     def create(cls, db, vals):
-        """Override create to auto-update vehicle status"""
+        """Override create to auto-update vehicle status and send notifications"""
         record = super(MaintenanceLog, cls).create(db, vals)
         
         # If maintenance is logged, set vehicle to 'in_shop'
         if record.vehicle_id and record.service_type in ['repair', 'routine']:
             record.vehicle_id.write({'status': 'in_shop'})
+            
+            # Send notifications
+            from backend.core.notification_helper import notify_fleet_managers, notify_dispatchers
+            
+            # Notify fleet managers about maintenance
+            notify_fleet_managers(
+                db,
+                title="Vehicle In Maintenance",
+                message=f"Vehicle {record.vehicle_id.name} is now in shop for {record.service_type}. Estimated cost: ${record.cost}",
+                notification_type="warning",
+                action_type="navigate",
+                action_target=f"/models/fleet.vehicle/{record.vehicle_id.id}"
+            )
+            
+            # Notify dispatchers that vehicle is unavailable
+            notify_dispatchers(
+                db,
+                title="Vehicle Unavailable",
+                message=f"Vehicle {record.vehicle_id.name} is in shop and cannot be assigned to trips.",
+                notification_type="warning",
+                action_type="navigate",
+                action_target=f"/models/fleet.maintenance.log/{record.id}"
+            )
         
         return record
