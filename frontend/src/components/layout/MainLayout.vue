@@ -254,7 +254,14 @@ import {
   Box,
   ChevronDown,
   Clock,
-  Search
+  Search,
+  Truck,
+  UserCircle,
+  MapPin,
+  Wrench,
+  DollarSign,
+  TrendingUp,
+  Settings
 } from 'lucide-vue-next';
 import NotificationContainer from '../common/NotificationContainer.vue';
 import NotificationBell from '../common/NotificationBell.vue';
@@ -304,7 +311,14 @@ const iconMap: Record<string, any> = {
   LayoutGrid,
   ClipboardList,
   Box,
-  Clock
+  Clock,
+  Truck,
+  UserCircle,
+  MapPin,
+  Wrench,
+  DollarSign,
+  TrendingUp,
+  Settings
 };
 
 const { requestReset, trail, trimToIndex } = useBreadcrumbs();

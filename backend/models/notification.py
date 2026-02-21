@@ -77,7 +77,28 @@ class Notification(ZnovaModel):
             "delete": True,
             "domain": []  # Can manage all notifications
         },
-        "user": {
+        "fleet_manager": {
+            "create": False,
+            "read": True,
+            "write": True,  # Can mark as read
+            "delete": False,
+            "domain": [("user_id", "=", "user.id")]  # Only their own notifications
+        },
+        "dispatcher": {
+            "create": False,
+            "read": True,
+            "write": True,  # Can mark as read
+            "delete": False,
+            "domain": [("user_id", "=", "user.id")]  # Only their own notifications
+        },
+        "safety_officer": {
+            "create": False,
+            "read": True,
+            "write": True,  # Can mark as read
+            "delete": False,
+            "domain": [("user_id", "=", "user.id")]  # Only their own notifications
+        },
+        "financial_analyst": {
             "create": False,
             "read": True,
             "write": True,  # Can mark as read

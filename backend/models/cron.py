@@ -42,7 +42,28 @@ class Cron(ZnovaModel):
             "delete": True,
             "domain": []
         },
-        "user": {
+        "fleet_manager": {
+            "create": False,
+            "read": False,
+            "write": False,
+            "delete": False,
+            "domain": []
+        },
+        "dispatcher": {
+            "create": False,
+            "read": False,
+            "write": False,
+            "delete": False,
+            "domain": []
+        },
+        "safety_officer": {
+            "create": False,
+            "read": False,
+            "write": False,
+            "delete": False,
+            "domain": []
+        },
+        "financial_analyst": {
             "create": False,
             "read": False,
             "write": False,

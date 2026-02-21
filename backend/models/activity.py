@@ -25,7 +25,28 @@ class ActivityLog(ZnovaModel):
             "delete": True,
             "domain": []
         },
-        "user": {
+        "fleet_manager": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": [("performed_by_id", "=", "user.id")]  # Only own activity
+        },
+        "dispatcher": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": [("performed_by_id", "=", "user.id")]  # Only own activity
+        },
+        "safety_officer": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": [("performed_by_id", "=", "user.id")]  # Only own activity
+        },
+        "financial_analyst": {
             "create": False,
             "read": True,
             "write": False,

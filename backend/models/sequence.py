@@ -30,7 +30,28 @@ class Sequence(ZnovaModel):
             "delete": True,
             "domain": []
         },
-        "user": {
+        "fleet_manager": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": []
+        },
+        "dispatcher": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": []
+        },
+        "safety_officer": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": []
+        },
+        "financial_analyst": {
             "create": False,
             "read": True,
             "write": False,

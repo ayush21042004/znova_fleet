@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://admin:password@localhost:5432/enterprise_db")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://admin:password@localhost:5432/fleet_db")
 
 # Configure connection pool to prevent exhaustion
 engine = create_engine(

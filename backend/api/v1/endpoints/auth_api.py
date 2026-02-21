@@ -149,11 +149,11 @@ def signup(request: SignupRequest, client_request: Request, db: Session = Depend
             detail="An account with this email address already exists"
         )
     
-    # Get or create user role
-    user_role = env['role'].search([('name', '=', 'user')], limit=1)
-    if not user_role:
-        user_role = Role(name="user", description="Normal User")
-        db.add(user_role)
+    # Get or create dispatcher role (default for new registrations)
+    dispatcher_role = env['role'].search([('name', '=', 'dispatcher')], limit=1)
+    if not dispatcher_role:
+        dispatcher_role = Role(name="dispatcher", description="Dispatcher - Create trips, assign drivers, and validate cargo loads")
+        db.add(dispatcher_role)
         db.flush()
 
     try:
@@ -162,7 +162,7 @@ def signup(request: SignupRequest, client_request: Request, db: Session = Depend
             'email': request.email,
             'full_name': request.full_name,
             'hashed_password': get_password_hash(request.password),
-            'role_id': user_role.id,
+            'role_id': dispatcher_role.id,
             'is_active': True
         })
         
@@ -181,8 +181,8 @@ def signup(request: SignupRequest, client_request: Request, db: Session = Depend
                 "email": new_user.email,
                 "full_name": new_user.full_name,
                 "role": {
-                    "name": new_user.role.name if new_user.role else "user",
-                    "label": new_user.role.name if new_user.role else "user"
+                    "name": new_user.role.name if new_user.role else "dispatcher",
+                    "label": new_user.role.name if new_user.role else "dispatcher"
                 },
                 "is_active": new_user.is_active,
                 "image": new_user.image,
@@ -247,8 +247,8 @@ def login(request: LoginRequest, client_request: Request, db: Session = Depends(
             "email": user.email,
             "full_name": user.full_name,
             "role": {
-                "name": user.role.name if user.role else "user",
-                "label": user.role.name if user.role else "user"
+                "name": user.role.name if user.role else "dispatcher",
+                "label": user.role.name if user.role else "dispatcher"
             },
             "is_active": user.is_active,
             "image": user.image,
@@ -434,10 +434,10 @@ def google_auth_callback(request: GoogleAuthRequest, client_request: Request, db
         user = env['user'].search([('email', '=', email)], limit=1)
         
         if not user:
-            # Create new user
-            user_role = env['role'].search([('name', '=', 'user')], limit=1)
-            if not user_role:
-                user_role = env['role'].create({'name': 'user', 'description': 'Normal User'})
+            # Create new user via Google OAuth with dispatcher role
+            dispatcher_role = env['role'].search([('name', '=', 'dispatcher')], limit=1)
+            if not dispatcher_role:
+                dispatcher_role = env['role'].create({'name': 'dispatcher', 'description': 'Dispatcher - Create trips, assign drivers, and validate cargo loads'})
             
             # Generate a random password for Google users (they won't use it)
             random_password = secrets.token_urlsafe(32)
@@ -446,7 +446,7 @@ def google_auth_callback(request: GoogleAuthRequest, client_request: Request, db
                 'email': email,
                 'full_name': name,
                 'hashed_password': get_password_hash(random_password),
-                'role_id': user_role.id,
+                'role_id': dispatcher_role.id,
                 'is_active': True
             })
             
@@ -475,8 +475,8 @@ def google_auth_callback(request: GoogleAuthRequest, client_request: Request, db
                 "email": user.email,
                 "full_name": user.full_name,
                 "role": {
-                    "name": user.role.name if user.role else "user",
-                    "label": user.role.name if user.role else "user"
+                    "name": user.role.name if user.role else "dispatcher",
+                    "label": user.role.name if user.role else "dispatcher"
                 },
                 "is_active": user.is_active,
                 "image": user.image,
@@ -516,8 +516,8 @@ def get_profile(current_user: User = Depends(get_current_user_from_jwt), db: Ses
                 "email": current_user.email,
                 "full_name": current_user.full_name,
                 "role": {
-                    "name": current_user.role.name if current_user.role else "user",
-                    "label": current_user.role.name if current_user.role else "user",
+                    "name": current_user.role.name if current_user.role else "dispatcher",
+                    "label": current_user.role.name if current_user.role else "dispatcher",
                     "permissions": permissions
                 },
                 "is_active": current_user.is_active,

@@ -28,11 +28,11 @@ cp .env.example .env
 
 ```bash
 # Create PostgreSQL database
-createdb enterprise_db
+createdb fleet_db
 
 # Or using psql
 psql -U postgres
-CREATE DATABASE enterprise_db;
+CREATE DATABASE fleet_db;
 \q
 ```
 

@@ -29,7 +29,7 @@ class PermissionValidator:
         """
         try:
             from backend.core.registry import registry
-            user_role = jwt_claims.get('role', 'user')
+            user_role = jwt_claims.get('role', 'dispatcher')
             
             # Admin role has all permissions by default
             if user_role == 'admin':

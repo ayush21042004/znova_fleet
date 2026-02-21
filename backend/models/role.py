@@ -40,7 +40,28 @@ class Role(ZnovaModel):
             "delete": True,
             "domain": []  # Can manage all roles
         },
-        "user": {
+        "fleet_manager": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": []  # Can see all roles but not modify
+        },
+        "dispatcher": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": []  # Can see all roles but not modify
+        },
+        "safety_officer": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": []  # Can see all roles but not modify
+        },
+        "financial_analyst": {
             "create": False,
             "read": True,
             "write": False,

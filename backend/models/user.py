@@ -53,10 +53,31 @@ class User(ZnovaModel):
             "delete": True,
             "domain": []  # Can manage all users
         },
-        "user": {
+        "fleet_manager": {
             "create": False,
             "read": True,
-            "write": True,
+            "write": False,
+            "delete": False,
+            "domain": [("id", "=", "user.id")]  # Only their own record
+        },
+        "dispatcher": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": [("id", "=", "user.id")]  # Only their own record
+        },
+        "safety_officer": {
+            "create": False,
+            "read": True,
+            "write": False,
+            "delete": False,
+            "domain": [("id", "=", "user.id")]  # Only their own record
+        },
+        "financial_analyst": {
+            "create": False,
+            "read": True,
+            "write": False,
             "delete": False,
             "domain": [("id", "=", "user.id")]  # Only their own record
         }

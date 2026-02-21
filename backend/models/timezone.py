@@ -13,7 +13,10 @@ class Timezone(ZnovaModel):
     
     _role_permissions = {
         "admin": {"create": True, "read": True, "write": True, "delete": True},
-        "user": {"create": False, "read": True, "write": False, "delete": False}
+        "fleet_manager": {"create": False, "read": True, "write": False, "delete": False},
+        "dispatcher": {"create": False, "read": True, "write": False, "delete": False},
+        "safety_officer": {"create": False, "read": True, "write": False, "delete": False},
+        "financial_analyst": {"create": False, "read": True, "write": False, "delete": False}
     }
 
     _ui_views = {
