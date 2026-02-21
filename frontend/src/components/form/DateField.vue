@@ -274,4 +274,99 @@ const handleUpdate = (value: any) => {
         }
     }
 }
+
+// Dark mode styles for datepicker
+[data-theme="dark"] {
+    .p-datepicker-panel,
+    .custom-prime-datepicker-panel {
+        background: #1c2128 !important;
+        border: 1px solid #30363d !important;
+        color: #c9d1d9 !important;
+        
+        // Header with month/year
+        .p-datepicker-header {
+            background: #1c2128 !important;
+            border-bottom: 1px solid #30363d !important;
+            color: #c9d1d9 !important;
+            
+            .p-datepicker-title {
+                color: #c9d1d9 !important;
+            }
+            
+            // Navigation buttons
+            .p-datepicker-prev-button,
+            .p-datepicker-next-button {
+                color: #c9d1d9 !important;
+                
+                &:hover {
+                    background: #21262d !important;
+                    color: #ffffff !important;
+                }
+            }
+        }
+        
+        // Calendar grid
+        .p-datepicker-calendar-container {
+            background: #1c2128 !important;
+            
+            // Day names header (Su, Mo, Tu, etc.)
+            .p-datepicker-day-view {
+                th {
+                    color: #8b949e !important;
+                }
+            }
+            
+            // Day cells
+            .p-datepicker-day {
+                color: #c9d1d9 !important;
+                
+                &:hover {
+                    background: #21262d !important;
+                }
+                
+                &.p-datepicker-other-month {
+                    color: #6e7681 !important;
+                }
+            }
+            
+            // Today's date (not selected)
+            .p-datepicker-today .p-datepicker-day:not(.p-datepicker-day-selected) {
+                background: #21262d !important;
+                color: v.$primary-color !important;
+                font-weight: 600 !important;
+            }
+            
+            // Selected date
+            .p-datepicker-day-selected {
+                background: v.$primary-color !important;
+                color: v.$white !important;
+            }
+        }
+        
+        // Button bar (Today/Clear)
+        .p-datepicker-buttonbar,
+        .custom-buttonbar {
+            background: #1c2128 !important;
+            
+            .p-button {
+                &.p-button-text {
+                    color: v.$primary-color !important;
+                    
+                    &:hover {
+                        background: #21262d !important;
+                    }
+                }
+                
+                &.p-button-secondary {
+                    color: #8b949e !important;
+                    
+                    &:hover {
+                        color: #c9d1d9 !important;
+                        background: #21262d !important;
+                    }
+                }
+            }
+        }
+    }
+}
 </style>

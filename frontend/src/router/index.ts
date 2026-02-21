@@ -47,7 +47,8 @@ const routes = [
             {
                 path: '',
                 name: 'Dashboard',
-                component: () => import('../views/DashboardView.vue')
+                component: () => import('../views/DashboardView.vue'),
+                meta: { title: 'Command Center' }
             },
             {
                 path: '/models/:model',
@@ -66,6 +67,12 @@ const routes = [
                 name: 'Profile',
                 component: () => import('../views/ProfileView.vue'),
                 meta: { title: 'My Profile' }
+            },
+            {
+                path: '/analytics',
+                name: 'Analytics',
+                component: () => import('../views/AnalyticsView.vue'),
+                meta: { title: 'Financial Reports' }
             },
         ]
     },

@@ -21,7 +21,7 @@
         <!-- Header -->
         <div class="auth-header">
           <div class="logo-wrapper">
-            <img :src="logoImage" alt="Znova" class="logo" />
+            <img :src="logoImage" alt="FleetFlow" class="logo" />
           </div>
           <h1>Set New Password</h1>
           <p>Enter your new password below</p>

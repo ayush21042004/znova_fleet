@@ -25,7 +25,7 @@ def initialize_menus(menu_manager: 'MenuManager'):
         groups=['admin', 'fleet_manager', 'dispatcher']
     ))
     menu_manager.add_item(fleet_group, MenuItem(
-        "maintenance", "Maintenance Logs", "/models/fleet.maintenance", "Wrench", sequence=40,
+        "maintenance", "Maintenance Logs", "/models/fleet.maintenance.log", "Wrench", sequence=40,
         groups=['admin', 'fleet_manager']
     ))
     menu_manager.add_item(fleet_group, MenuItem(
@@ -36,7 +36,7 @@ def initialize_menus(menu_manager: 'MenuManager'):
     # --- Analytics Group ---
     analytics_group = "Analytics"
     menu_manager.add_item(analytics_group, MenuItem(
-        "reports", "Reports & Analytics", "/analytics/reports", "TrendingUp", sequence=10,
+        "analytics", "Operational Analytics", "/analytics", "TrendingUp", sequence=10,
         groups=['admin', 'fleet_manager', 'financial_analyst']
     ))
 

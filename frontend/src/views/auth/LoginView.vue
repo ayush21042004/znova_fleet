@@ -21,10 +21,10 @@
         <!-- Header -->
         <div class="auth-header">
           <div class="logo-wrapper">
-            <img :src="logoImage" alt="Znova" class="logo" />
+            <img :src="logoImage" alt="FleetFlow" class="logo" />
           </div>
           <h1>Sign In</h1>
-          <p>Welcome back to Znova framework.</p>
+          <p>Welcome back to FleetFlow.</p>
         </div>
 
         <!-- Form -->

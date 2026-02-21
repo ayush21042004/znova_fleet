@@ -21,10 +21,10 @@
         <!-- Header -->
         <div class="auth-header">
           <div class="logo-wrapper">
-            <img :src="logoImage" alt="Znova" class="logo" />
+            <img :src="logoImage" alt="FleetFlow" class="logo" />
           </div>
           <h1>Create your account</h1>
-          <p>Join thousands of developers building faster.</p>
+          <p>Join fleet managers optimizing their operations.</p>
         </div>
 
         <!-- Form -->

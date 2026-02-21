@@ -13,7 +13,7 @@
         <!-- Header -->
         <div class="auth-header">
           <div class="logo-wrapper">
-            <img :src="logoImage" alt="Znova" class="logo" />
+            <img :src="logoImage" alt="FleetFlow" class="logo" />
           </div>
           <h1>Completing Google Sign In</h1>
           <p>Please wait while we process your authentication...</p>

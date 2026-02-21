@@ -8,9 +8,9 @@
       </button>
       <div class="mobile-logo">
         <div class="logo-container">
-          <img :src="logoIcon" alt="Znova" class="mobile-logo-img" />
+          <img :src="logoIcon" alt="FleetFlow" class="mobile-logo-img" />
         </div>
-        <span class="brand-name">Znova</span>
+        <span class="brand-name">FleetFlow</span>
       </div>
       <div class="mobile-header-actions">
         <NotificationBell />
@@ -32,9 +32,9 @@
     <aside class="sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
       <div class="sidebar-header" data-id="clean-header">
         <div class="logo-container">
-          <img :src="logoIcon" alt="Znova" class="sidebar-logo-icon" />
+          <img :src="logoIcon" alt="FleetFlow" class="sidebar-logo-icon" />
         </div>
-        <span v-if="!effectiveCollapsed" class="brand-name">Znova</span>
+        <span v-if="!effectiveCollapsed" class="brand-name">FleetFlow</span>
       </div>
 
       <nav class="sidebar-nav dark-scrollbar">

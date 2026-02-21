@@ -5,7 +5,7 @@ and UI metadata.
 """
 
 from sqlalchemy import Column, String, Text as SQLText, Date as SQLDate, DateTime as SQLDateTime, Boolean as SQLBoolean, ForeignKey, JSON as SQLJSON
-from sqlalchemy import Integer as SQLInteger
+from sqlalchemy import Integer as SQLInteger, Float as SQLFloat
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from typing import Dict, Any, List, Optional, Union
@@ -110,6 +110,16 @@ class Integer(BaseField):
         if not self.store:
             return None
         return Column(SQLInteger, nullable=not self.required, default=self.default)
+
+
+class Float(BaseField):
+    """Float field"""
+    field_type = "float"
+    
+    def get_column(self, field_name: str) -> Column:
+        if not self.store:
+            return None
+        return Column(SQLFloat, nullable=not self.required, default=self.default)
 
 
 class Boolean(BaseField):
@@ -248,21 +258,28 @@ class Many2one(BaseField):
         """Convert model name to class name"""
         # Get the actual class from the registry
         from backend.core.registry import registry
-        
+
         # First try to get the model from registry
         model_cls = registry.get_model(comodel_name)
         if model_cls:
             return model_cls.__name__
-        
-        # Fallback to mapping for common models - CLEANED UP
+
+        # Fallback to mapping for common models
         class_mapping = {
             "user": "User",
             "role": "Role",
         }
         if comodel_name in class_mapping:
             return class_mapping[comodel_name]
-        # bcm.match -> Match
-        return comodel_name.split(".")[-1].title()
+
+        # Handle dotted names: fleet.maintenance.log -> MaintenanceLog
+        # Get everything after namespace, replace dots with underscores, split and title case
+        if '.' in comodel_name:
+            model_part = comodel_name.split('.', 1)[1]  # Get part after first dot
+            parts = model_part.replace('.', '_').split('_')
+        else:
+            parts = comodel_name.split('_')
+        return "".join(part.title() for part in parts)
 
 
 class One2many(BaseField):
@@ -318,21 +335,28 @@ class One2many(BaseField):
         """Convert model name to class name"""
         # Get the actual class from the registry
         from backend.core.registry import registry
-        
+
         # First try to get the model from registry
         model_cls = registry.get_model(comodel_name)
         if model_cls:
             return model_cls.__name__
-        
-        # Fallback to mapping for common models - CLEANED UP
+
+        # Fallback to mapping for common models
         class_mapping = {
             "user": "User",
             "role": "Role",
         }
         if comodel_name in class_mapping:
             return class_mapping[comodel_name]
-        # bcm.match -> Match
-        return comodel_name.split(".")[-1].title()
+
+        # Handle dotted names: fleet.maintenance.log -> MaintenanceLog
+        # Get everything after namespace, replace dots with underscores, split and title case
+        if '.' in comodel_name:
+            model_part = comodel_name.split('.', 1)[1]  # Get part after first dot
+            parts = model_part.replace('.', '_').split('_')
+        else:
+            parts = comodel_name.split('_')
+        return "".join(part.title() for part in parts)
 
 
 class Many2many(BaseField):
@@ -456,21 +480,28 @@ class Many2many(BaseField):
         """Convert model name to class name"""
         # Get the actual class from the registry
         from backend.core.registry import registry
-        
+
         # First try to get the model from registry
         model_cls = registry.get_model(comodel_name)
         if model_cls:
             return model_cls.__name__
-        
-        # Fallback to mapping for common models - CLEANED UP
+
+        # Fallback to mapping for common models
         class_mapping = {
             "user": "User",
             "role": "Role",
         }
         if comodel_name in class_mapping:
             return class_mapping[comodel_name]
-        # bcm.match -> Match
-        return comodel_name.split(".")[-1].title()
+
+        # Handle dotted names: fleet.maintenance.log -> MaintenanceLog
+        # Get everything after namespace, replace dots with underscores, split and title case
+        if '.' in comodel_name:
+            model_part = comodel_name.split('.', 1)[1]  # Get part after first dot
+            parts = model_part.replace('.', '_').split('_')
+        else:
+            parts = comodel_name.split('_')
+        return "".join(part.title() for part in parts)
 
 
 class Image(BaseField):

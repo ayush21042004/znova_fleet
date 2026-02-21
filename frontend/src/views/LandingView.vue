@@ -1,924 +1,287 @@
 <template>
-  <div class="landing-container">
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <!-- Background Effects -->
-      <div class="background-effects">
-        <div class="glow-primary"></div>
-        <div class="glow-secondary"></div>
-        <div class="glow-tertiary"></div>
+  <div class="fleet-landing">
+    <nav class="fleet-nav">
+      <div class="nav-wrap">
+        <div class="nav-logo" @click="$router.push('/')">
+          <Truck :size="24" />
+          <span>FleetFlow</span>
+        </div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#how">Solutions</a>
+          <a href="#stats">Pricing</a>
+        </div>
+        <div class="nav-btns">
+          <button @click="$router.push('/login')" class="btn-text">Login</button>
+          <button @click="$router.push('/signup')" class="btn-solid">Get Started</button>
+        </div>
       </div>
+    </nav>
 
-      <div class="hero-content">
-        <!-- Badge -->
-        <div class="version-badge">
-          <span class="pulse-dot">
-            <span class="ping"></span>
-            <span class="dot"></span>
-          </span>
-          Znova v2.0 is now available
-          <i class="icofont-long-arrow-right"></i>
+    <section class="hero">
+      <div class="badge">
+        <span class="ping-dot"></span>
+        <span>New: Real-Time Fleet Tracking & Analytics</span>
+      </div>
+      <h1>The Intelligence Behind<br/><span class="grad">Your Modern Fleet</span></h1>
+      <p class="subtitle">Optimize delivery operations, ensure driver safety, and control finances with our modular logistics ecosystem.</p>
+      <div class="hero-btns">
+        <button @click="$router.push('/signup')" class="btn-hero">Start Free Trial <ArrowRight :size="16" /></button>
+        <button @click="$router.push('/login')" class="btn-demo"><LogIn :size="18" /> Sign In</button>
+      </div>
+      <div class="dashboard-mock">
+        <div class="mock-header">
+          <div class="dots"><span></span><span></span><span></span></div>
         </div>
-
-        <!-- Main Heading -->
-        <h1 class="hero-title">
-          Build Enterprise Apps with <span class="gradient-text">Znova</span>
-        </h1>
-
-        <!-- Subheading -->
-        <p class="hero-subtitle">
-          The modern full-stack framework combining Python FastAPI backend with Vue.js frontend. 
-          Ship scalable enterprise applications with powerful metadata management and zero configuration.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div class="cta-group">
-          <button @click="$router.push('/signup')" class="btn btn-primary">
-            Get Started
-            <i class="icofont-long-arrow-right"></i>
-          </button>
-          <button @click="$router.push('/login')" class="btn btn-secondary">
-            Sign In
-          </button>
-        </div>
-
-        <!-- Code Preview -->
-        <div class="code-preview">
-          <div class="code-window">
-            <!-- Window Controls -->
-            <div class="window-controls">
-              <div class="control-dots">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-              </div>
-              <div class="file-name">models/user.py</div>
+        <div class="mock-body">
+          <div class="sidebar">
+            <div class="sb-head">Active Units <span class="badge-sm">24</span></div>
+            <div class="unit active"><div class="dot green"></div><div><div class="u-name">Truck #1042</div><div class="u-status">En route • 45m</div></div></div>
+            <div class="unit"><div class="dot orange"></div><div><div class="u-name">Van #8821</div><div class="u-status">Maintenance Required</div></div></div>
+            <div class="unit"><div class="dot green"></div><div><div class="u-name">Freight #3390</div><div class="u-status">Loading • Dock 4</div></div></div>
+          </div>
+          <div class="map-area">
+            <div class="map-stat">
+              <div class="stat-label">Fleet Efficiency</div>
+              <div class="stat-value">94.2%</div>
+              <div class="stat-trend"><TrendingUp :size="12" /> +2.4%</div>
             </div>
-
-            <!-- Code Content -->
-            <div class="code-content">
-              <pre><code><span class="keyword">from</span> backend.core.znova_model <span class="keyword">import</span> ZnovaModel
-<span class="keyword">from</span> backend.core <span class="keyword">import</span> fields
-
-<span class="keyword">class</span> <span class="class-name">User</span>(ZnovaModel):
-    <span class="property">__tablename__</span> = <span class="string">"users"</span>
-    <span class="property">_model_name_</span> = <span class="string">"user"</span>
-    
-    <span class="comment"># Define fields with metadata</span>
-    full_name = fields.<span class="function">Char</span>(label=<span class="string">"Full Name"</span>, required=<span class="keyword">True</span>)
-    email = fields.<span class="function">Char</span>(label=<span class="string">"Email"</span>, required=<span class="keyword">True</span>)
-    role_id = fields.<span class="function">Many2one</span>(<span class="string">"role"</span>, label=<span class="string">"Role"</span>)
-    
-    <span class="comment"># Auto-generated CRUD API + UI 🚀</span></code></pre>
-            </div>
+            <div class="map-marker"><Truck :size="24" /></div>
           </div>
+        </div>
+      </div>
+      <div class="social-proof">
+        <p>Trusted by forward-thinking logistics teams</p>
+        <div class="logos">
+          <span><Package :size="20" /> LOGISTICORP</span>
+          <span><Truck :size="20" /> FASTFREIGHT</span>
+          <span><Plane :size="20" /> AEROBOX</span>
         </div>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section">
-      <div class="section-header">
-        <h2 class="section-title">Why developers choose Znova</h2>
-        <p class="section-subtitle">
-          Engineered for enterprise applications. We stripped away the complexity 
-          so you can focus on building what matters.
-        </p>
+    <section id="features" class="features">
+      <div class="section-head">
+        <h3 class="tag">Modular Platform</h3>
+        <h2>Everything needed to run a modern fleet</h2>
+        <p>Our modular architecture allows you to enable exactly what you need.</p>
       </div>
-
-      <div class="features-grid">
-        <!-- Feature 1 -->
+      <div class="feature-grid">
         <div class="feature-card">
-          <div class="feature-icon-wrapper primary">
-            <i class="icofont-flash"></i>
-          </div>
-          <h3>Rapid Development</h3>
-          <p>
-            Define your data models once and get auto-generated REST APIs, 
-            CRUD operations, and responsive UI forms instantly.
-          </p>
+          <div class="f-icon blue"><Map :size="24" /></div>
+          <h4>Command Center</h4>
+          <p>Real-time visibility into every vehicle and driver with live GPS.</p>
         </div>
-
-        <!-- Feature 2 -->
         <div class="feature-card">
-          <div class="feature-icon-wrapper purple">
-            <i class="icofont-database"></i>
-          </div>
-          <h3>Metadata-Driven</h3>
-          <p>
-            Powerful metadata system with field types, validations, and domain rules. 
-            Build complex business logic without writing boilerplate code.
-          </p>
+          <div class="f-icon orange"><Route :size="24" /></div>
+          <h4>Trip Dispatcher</h4>
+          <p>AI-powered route optimization that adapts to traffic in real-time.</p>
         </div>
-
-        <!-- Feature 3 -->
         <div class="feature-card">
-          <div class="feature-icon-wrapper cyan">
-            <i class="icofont-shield-alt"></i>
-          </div>
-          <h3>Enterprise Security</h3>
-          <p>
-            Built-in role-based access control, OAuth integration, and field-level 
-            permissions. Security is not an afterthought.
-          </p>
+          <div class="f-icon blue"><Wrench :size="24" /></div>
+          <h4>Asset Management</h4>
+          <p>Track maintenance schedules and prevent downtime before it happens.</p>
         </div>
-
-        <!-- Feature 4 -->
         <div class="feature-card">
-          <div class="feature-icon-wrapper green">
-            <i class="icofont-ui-browser"></i>
-          </div>
-          <h3>Modern UI</h3>
-          <p>
-            Beautiful Vue.js components with dark mode support. Responsive design 
-            that works seamlessly across all devices.
-          </p>
-        </div>
-
-        <!-- Feature 5 -->
-        <div class="feature-card">
-          <div class="feature-icon-wrapper orange">
-            <i class="icofont-code-alt"></i>
-          </div>
-          <h3>Python + Vue.js</h3>
-          <p>
-            FastAPI backend for blazing-fast APIs and Vue 3 frontend with Composition API. 
-            Best of both worlds in one framework.
-          </p>
-        </div>
-
-        <!-- Feature 6 -->
-        <div class="feature-card">
-          <div class="feature-icon-wrapper pink">
-            <i class="icofont-rocket-alt-2"></i>
-          </div>
-          <h3>Production Ready</h3>
-          <p>
-            Database migrations, background jobs, real-time notifications, and file uploads. 
-            Everything you need to ship enterprise apps.
-          </p>
+          <div class="f-icon blue"><BarChart3 :size="24" /></div>
+          <h4>Financial Analytics</h4>
+          <p>Deep dive into cost-per-mile, fuel usage, and revenue tracking.</p>
         </div>
       </div>
     </section>
 
-    <!-- Tech Stack Section -->
-    <section class="tech-stack-section">
-      <div class="section-header">
-        <h2 class="section-title">Built with modern technologies</h2>
-        <p class="section-subtitle">
-          Znova combines the best tools in the ecosystem to deliver exceptional developer experience
-        </p>
-      </div>
-
-      <div class="tech-grid">
-        <div class="tech-item">
-          <div class="tech-icon">🐍</div>
-          <div class="tech-name">Python</div>
-          <div class="tech-desc">FastAPI Backend</div>
+    <section id="how" class="workflow">
+      <div class="work-content">
+        <div class="work-left">
+          <h2>How FleetFlow Works</h2>
+          <p>From intake to insight, we streamline every step of your logistics operation.</p>
         </div>
-        <div class="tech-item">
-          <div class="tech-icon">⚡</div>
-          <div class="tech-name">Vue.js 3</div>
-          <div class="tech-desc">Reactive Frontend</div>
-        </div>
-        <div class="tech-item">
-          <div class="tech-icon">🗄️</div>
-          <div class="tech-name">PostgreSQL</div>
-          <div class="tech-desc">Reliable Database</div>
-        </div>
-        <div class="tech-item">
-          <div class="tech-icon">🔐</div>
-          <div class="tech-name">OAuth 2.0</div>
-          <div class="tech-desc">Secure Auth</div>
+        <div class="work-steps">
+          <div class="step"><div class="step-icon"><Upload :size="20" /></div><div><span>Step 1</span><h4>Vehicle Intake</h4><p>Quickly onboard new assets and drivers into the system.</p></div></div>
+          <div class="step"><div class="step-icon"><Route :size="20" /></div><div><span>Step 2</span><h4>Route Planning</h4><p>Calculate the most efficient paths considering all constraints.</p></div></div>
+          <div class="step"><div class="step-icon"><Satellite :size="20" /></div><div><span>Step 3</span><h4>Live Monitoring</h4><p>Watch your fleet move in real-time with instant alerts.</p></div></div>
+          <div class="step"><div class="step-icon"><BarChart3 :size="20" /></div><div><span>Step 4</span><h4>Data Insights</h4><p>Automated reports generate actionable insights on performance.</p></div></div>
         </div>
       </div>
     </section>
 
-    <!-- CTA Section -->
+    <section id="stats" class="stats">
+      <div class="stat-item"><h3>10k+</h3><p>Vehicles Tracked</p></div>
+      <div class="stat-item"><h3>99.9%</h3><p>Uptime Reliability</p></div>
+      <div class="stat-item"><h3>25%</h3><p>Fuel Savings</p></div>
+      <div class="stat-item"><h3>24/7</h3><p>Support Access</p></div>
+    </section>
+
     <section class="cta-section">
-      <div class="cta-content">
-        <h2>Ready to build your next enterprise app?</h2>
-        <p>Join developers building scalable applications with Znova</p>
-        <div class="cta-actions">
-          <button @click="$router.push('/signup')" class="btn btn-primary btn-large">
-            Start Building Now
-            <i class="icofont-long-arrow-right"></i>
-          </button>
-          <button @click="$router.push('/login')" class="btn btn-outline btn-large">
-            View Documentation
-          </button>
+      <div class="cta-box">
+        <h2>Ready to optimize your fleet?</h2>
+        <p>Join hundreds of logistics companies using FleetFlow to save costs and improve safety.</p>
+        <div class="cta-btns">
+          <button @click="$router.push('/signup')" class="btn-white">Get Started Now</button>
+          <button class="btn-outline">Contact Sales</button>
         </div>
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="landing-footer">
+    <footer id="footer" class="footer">
       <div class="footer-content">
         <div class="footer-brand">
-          <img :src="logoText" alt="Znova" class="footer-logo" />
-          <p>
-            Making enterprise development faster, safer, and more enjoyable. 
-            Open source and community driven.
-          </p>
+          <div class="f-logo"><Truck :size="20" /> FleetFlow</div>
+          <p>The modern operating system for fleet management.</p>
         </div>
-
         <div class="footer-links">
-          <div class="footer-column">
-            <h4>Product</h4>
-            <ul>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Documentation</a></li>
-              <li><a href="#">Templates</a></li>
-              <li><a href="#">Enterprise</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-column">
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="#">API Reference</a></li>
-              <li><a href="#">Community</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Tutorials</a></li>
-            </ul>
-          </div>
-
-          <div class="footer-column">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Legal</a></li>
-              <li><a href="#">Contact</a></li>
-            </ul>
-          </div>
+          <div><h4>Product</h4><a href="#features">Features</a><a href="#">Pricing</a></div>
+          <div><h4>Company</h4><a href="#">About</a><a href="#">Contact</a></div>
         </div>
       </div>
-
       <div class="footer-bottom">
-        <p>© 2024 Znova. All rights reserved.</p>
-        <div class="status-indicator">
-          <span class="status-dot"></span>
-          Systems Operational
-        </div>
+        <p>© 2024 FleetFlow Inc. All rights reserved.</p>
       </div>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import logoText from '@/assets/znova_text_no_bg.png';
+import { Truck, ArrowRight, LogIn, TrendingUp, Package, Plane, Map, Route, Wrench, BarChart3, Upload, Satellite } from 'lucide-vue-next';
 </script>
 
-<style lang="scss" scoped>
-@use "../styles/variables" as v;
+<style scoped>
+.fleet-landing { min-height: 100vh; background: #101922; color: #f1f5f9; font-family: 'Inter', sans-serif; }
 
-.landing-container {
-  min-height: 100vh;
-  background: #0d1117;
-  overflow-x: hidden;
-}
+/* Navigation */
+.fleet-nav { position: fixed; top: 0; width: 100%; z-index: 50; background: rgba(16, 25, 34, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #1e293b; }
+.nav-wrap { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; height: 80px; }
+.nav-logo { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 700; cursor: pointer; color: #fff; }
+.nav-logo svg { color: #137fec; }
+.nav-links { display: flex; gap: 32px; }
+.nav-links a { color: #cbd5e1; font-size: 14px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: #137fec; }
+.nav-btns { display: flex; gap: 16px; align-items: center; }
+.btn-text { background: none; border: none; color: #cbd5e1; font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 16px; transition: color 0.2s; }
+.btn-text:hover { color: #fff; }
+.btn-solid { background: #137fec; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(19, 127, 236, 0.25); transition: all 0.2s; }
+.btn-solid:hover { background: #0d6edb; }
 
-// Hero Section
-.hero-section {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 8rem 2rem 4rem;
-  overflow: hidden;
-  
-  @media (max-width: 768px) {
-    padding: 6rem 1rem 3rem;
-  }
-}
+/* Hero */
+.hero { max-width: 1280px; margin: 0 auto; padding: 140px 2rem 80px; text-align: center; }
+.badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; background: #1c242e; border: 1px solid rgba(71, 85, 105, 0.5); border-radius: 999px; font-size: 12px; color: #cbd5e1; margin-bottom: 32px; }
+.ping-dot { position: relative; width: 8px; height: 8px; background: #f97316; border-radius: 50%; }
+.ping-dot::before { content: ''; position: absolute; inset: 0; background: #f97316; border-radius: 50%; animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+@keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+.hero h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: #fff; }
+.grad { background: linear-gradient(to right, #137fec, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.subtitle { font-size: 20px; color: #94a3b8; max-width: 700px; margin: 0 auto 40px; line-height: 1.6; }
+.hero-btns { display: flex; gap: 16px; justify-content: center; margin-bottom: 64px; }
+.btn-hero { background: #137fec; color: #fff; border: none; padding: 12px 32px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 15px -3px rgba(19, 127, 236, 0.3); transition: all 0.2s; }
+.btn-hero:hover { background: #0d6edb; }
+.btn-demo { background: #1c242e; color: #fff; border: 1px solid #475569; padding: 12px 32px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.btn-demo:hover { background: #1e293b; }
+.btn-demo svg { color: #cbd5e1; }
 
-.background-effects {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 1400px;
-  height: 100%;
-  pointer-events: none;
-}
+/* Dashboard Mock */
+.dashboard-mock { max-width: 1200px; margin: 0 auto; border: 1px solid #1e293b; border-radius: 12px; background: rgba(28, 36, 46, 0.5); overflow: hidden; box-shadow: 0 0 120px -30px rgba(19, 127, 236, 0.3); }
+.mock-header { height: 32px; background: #1c242e; border-bottom: 1px solid #1e293b; display: flex; align-items: center; padding: 0 16px; }
+.dots { display: flex; gap: 8px; }
+.dots span { width: 12px; height: 12px; border-radius: 50%; }
+.dots span:nth-child(1) { background: #ef4444; }
+.dots span:nth-child(2) { background: #eab308; }
+.dots span:nth-child(3) { background: #22c55e; }
+.mock-body { display: grid; grid-template-columns: 300px 1fr; min-height: 400px; }
+.sidebar { background: rgba(16, 25, 34, 0.8); padding: 16px; border-right: 1px solid #1e293b; }
+.sb-head { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.05em; }
+.badge-sm { background: rgba(19, 127, 236, 0.2); color: #137fec; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.unit { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: background 0.2s; }
+.unit.active { background: #1c242e; border: 1px solid rgba(71, 85, 105, 0.5); }
+.unit:not(.active) { border: 1px solid transparent; }
+.unit:hover { background: rgba(28, 36, 46, 0.5); }
+.dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot.green { background: #4ade80; box-shadow: 0 0 8px rgba(74, 222, 128, 0.5); }
+.dot.orange { background: #f97316; box-shadow: 0 0 8px rgba(249, 115, 22, 0.5); }
+.u-name { font-size: 14px; font-weight: 500; color: #fff; }
+.u-status { font-size: 12px; color: #64748b; }
+.map-area { position: relative; background: #0f172a; display: flex; align-items: center; justify-content: center; }
+.map-stat { position: absolute; top: 16px; right: 16px; background: rgba(28, 36, 46, 0.9); backdrop-filter: blur(8px); border: 1px solid #475569; padding: 12px; border-radius: 8px; }
+.stat-label { font-size: 11px; color: #94a3b8; margin-bottom: 4px; }
+.stat-value { font-size: 24px; font-weight: 700; color: #fff; }
+.stat-trend { font-size: 11px; color: #4ade80; display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+.map-marker { width: 48px; height: 48px; background: #1c242e; border: 2px solid #137fec; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #137fec; position: relative; }
+.map-marker::before { content: ''; position: absolute; inset: 0; background: rgba(19, 127, 236, 0.2); border-radius: 50%; animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
 
-.glow-primary {
-  position: absolute;
-  top: -10%;
-  left: 25%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
-  filter: blur(80px);
-  animation: float 20s ease-in-out infinite;
-}
+/* Social Proof */
+.social-proof { margin-top: 64px; }
+.social-proof p { font-size: 12px; font-weight: 500; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px; }
+.logos { display: flex; justify-content: center; gap: 64px; flex-wrap: wrap; opacity: 0.5; transition: opacity 0.5s; }
+.logos:hover { opacity: 1; }
+.logos span { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 700; color: #fff; }
 
-.glow-secondary {
-  position: absolute;
-  top: 20%;
-  right: 20%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
-  filter: blur(70px);
-  animation: float 15s ease-in-out infinite reverse;
-}
+/* Features */
+.features { padding: 80px 2rem; background: #101922; border-top: 1px solid #1e293b; }
+.section-head { text-align: center; margin-bottom: 64px; max-width: 800px; margin-left: auto; margin-right: auto; }
+.tag { color: #137fec; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.section-head h2 { font-size: 36px; font-weight: 800; color: #fff; margin-bottom: 16px; }
+.section-head p { font-size: 18px; color: #94a3b8; }
+.feature-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.feature-card { background: #1c242e; border: 1px solid #1e293b; border-radius: 12px; padding: 24px; transition: all 0.3s; cursor: pointer; }
+.feature-card:hover { border-color: rgba(19, 127, 236, 0.5); box-shadow: 0 0 30px -10px rgba(19, 127, 236, 0.3); }
+.f-icon { width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; transition: all 0.3s; }
+.f-icon.blue { background: rgba(19, 127, 236, 0.1); color: #137fec; }
+.f-icon.orange { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+.feature-card:hover .f-icon.blue { background: #137fec; color: #fff; }
+.feature-card:hover .f-icon.orange { background: #f97316; color: #fff; }
+.feature-card h4 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.feature-card p { font-size: 14px; color: #94a3b8; line-height: 1.6; }
 
-.glow-tertiary {
-  position: absolute;
-  top: 10%;
-  right: 30%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
-  filter: blur(60px);
-  animation: float 18s ease-in-out infinite;
-}
+/* Workflow */
+.workflow { padding: 80px 2rem; background: #0d131a; }
+.work-content { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 48px; }
+.work-left h2 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 24px; }
+.work-left p { font-size: 18px; color: #94a3b8; line-height: 1.6; }
+.work-steps { border-left: 2px solid #1e293b; padding-left: 32px; display: flex; flex-direction: column; gap: 48px; }
+.step { display: flex; gap: 16px; position: relative; }
+.step::before { content: ''; position: absolute; left: -40px; top: 0; width: 16px; height: 16px; background: #1c242e; border: 2px solid #475569; border-radius: 50%; transition: all 0.3s; }
+.step:hover::before { border-color: #137fec; background: #137fec; }
+.step-icon { width: 48px; height: 48px; background: #1c242e; border: 1px solid #475569; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+.step span { display: block; font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+.step h4 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.step p { font-size: 14px; color: #94a3b8; line-height: 1.6; }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-30px); }
-}
+/* Stats */
+.stats { padding: 64px 2rem; background: #1c242e; border-top: 1px solid #1e293b; border-bottom: 1px solid #1e293b; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; max-width: 1280px; margin: 0 auto; text-align: center; }
+.stat-item h3 { font-size: 40px; font-weight: 900; color: #fff; margin-bottom: 8px; }
+.stat-item p { font-size: 14px; font-weight: 500; color: #64748b; }
 
-.hero-content {
-  position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  text-align: center;
-  z-index: 1;
-}
+/* CTA */
+.cta-section { padding: 96px 2rem; }
+.cta-box { max-width: 1000px; margin: 0 auto; background: linear-gradient(to bottom right, #1e3a8a, #1e293b); border: 1px solid #475569; border-radius: 24px; padding: 64px 32px; text-align: center; position: relative; overflow: hidden; }
+.cta-box::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: rgba(19, 127, 236, 0.2); border-radius: 50%; filter: blur(60px); }
+.cta-box::after { content: ''; position: absolute; bottom: -80px; left: -80px; width: 320px; height: 320px; background: rgba(249, 115, 22, 0.1); border-radius: 50%; filter: blur(60px); }
+.cta-box h2 { font-size: 40px; font-weight: 700; color: #fff; margin-bottom: 16px; position: relative; z-index: 1; }
+.cta-box p { font-size: 18px; color: #cbd5e1; margin-bottom: 40px; position: relative; z-index: 1; }
+.cta-btns { display: flex; gap: 16px; justify-content: center; position: relative; z-index: 1; }
+.btn-white { background: #fff; color: #0f172a; border: none; padding: 12px 32px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.btn-white:hover { background: #f1f5f9; }
+.btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 12px 32px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.btn-outline:hover { background: rgba(255, 255, 255, 0.1); }
 
-.version-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  background: rgba(37, 99, 235, 0.1);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  color: #58a6ff;
-  font-size: 0.875rem;
-  font-weight: 500;
-  margin-bottom: 2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    background: rgba(37, 99, 235, 0.2);
-  }
-  
-  i {
-    font-size: 0.75rem;
-  }
-}
+/* Footer */
+.footer { background: #0b1118; border-top: 1px solid #1e293b; padding: 64px 2rem 32px; }
+.footer-content { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand { }
+.f-logo { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+.f-logo svg { color: #137fec; }
+.footer-brand p { font-size: 14px; color: #64748b; max-width: 300px; }
+.footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.footer-links h4 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 16px; }
+.footer-links a { display: block; font-size: 14px; color: #94a3b8; text-decoration: none; margin-bottom: 8px; transition: color 0.2s; }
+.footer-links a:hover { color: #137fec; }
+.footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 32px; border-top: 1px solid #1e293b; text-align: center; font-size: 14px; color: #64748b; }
 
-.pulse-dot {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 8px;
-  height: 8px;
-}
-
-.ping {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #58a6ff;
-  opacity: 0.75;
-  animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-.dot {
-  position: relative;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #58a6ff;
-}
-
-@keyframes ping {
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  color: #e6edf3;
-  letter-spacing: -0.02em;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-subtitle {
-  font-size: clamp(1.125rem, 2vw, 1.25rem);
-  color: #7d8590;
-  max-width: 700px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.6;
-}
-
-.cta-group {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
-  
-  @media (max-width: 480px) {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: none;
-  
-  &.btn-large {
-    padding: 1rem 2.5rem;
-    font-size: 1.125rem;
-  }
-  
-  &.btn-primary {
-    background: #2563eb;
-    color: white;
-    box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
-    
-    &:hover {
-      background: #1d4ed8;
-      box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
-      transform: translateY(-2px);
-    }
-    
-    i {
-      transition: transform 0.3s ease;
-    }
-    
-    &:hover i {
-      transform: translateX(4px);
-    }
-  }
-  
-  &.btn-secondary {
-    background: rgba(48, 54, 61, 0.6);
-    color: #e6edf3;
-    border: 1px solid #30363d;
-    
-    &:hover {
-      background: rgba(48, 54, 61, 0.8);
-      border-color: #484f58;
-      transform: translateY(-2px);
-    }
-  }
-  
-  &.btn-outline {
-    background: transparent;
-    color: #e6edf3;
-    border: 2px solid #58a6ff;
-    
-    &:hover {
-      background: #58a6ff;
-      color: #0d1117;
-      transform: translateY(-2px);
-    }
-  }
-}
-
-// Code Preview
-.code-preview {
-  max-width: 900px;
-  margin: 0 auto;
-  perspective: 1000px;
-}
-
-.code-window {
-  position: relative;
-  background: #0d0d16;
-  border: 1px solid #30363d;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  transition: transform 0.7s ease;
-  
-  &:hover {
-    transform: rotateX(0deg);
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), transparent, rgba(168, 85, 247, 0.2));
-    opacity: 0.2;
-    filter: blur(20px);
-    z-index: -1;
-  }
-}
-
-.window-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.control-dots {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.control-dots .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  
-  &.red { background: rgba(255, 95, 86, 0.8); }
-  &.yellow { background: rgba(255, 189, 46, 0.8); }
-  &.green { background: rgba(40, 201, 64, 0.8); }
-}
-
-.file-name {
-  font-family: 'Courier New', monospace;
-  font-size: 0.75rem;
-  color: #7d8590;
-}
-
-.code-content {
-  padding: 1.5rem;
-  overflow-x: auto;
-  
-  pre {
-    margin: 0;
-    font-family: 'Courier New', monospace;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: #e6edf3;
-    text-align: left;
-  }
-  
-  .keyword { color: #ff79c6; }
-  .function { color: #8be9fd; }
-  .string { color: #f1fa8c; }
-  .comment { color: #6272a4; font-style: italic; }
-  .class-name { color: #50fa7b; }
-  .property { color: #bd93f9; }
-}
-
-// Features Section
-.features-section {
-  padding: 6rem 2rem;
-  background: #161b22;
-  
-  @media (max-width: 768px) {
-    padding: 4rem 1rem;
-  }
-}
-
-.section-header {
-  max-width: 800px;
-  margin: 0 auto 4rem;
-  text-align: center;
-}
-
-.section-title {
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  font-weight: 700;
-  color: #e6edf3;
-  margin-bottom: 1rem;
-}
-
-.section-subtitle {
-  font-size: 1.125rem;
-  color: #7d8590;
-  line-height: 1.6;
-}
-
-.features-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.feature-card {
-  padding: 2rem;
-  background: rgba(13, 17, 23, 0.7);
-  backdrop-filter: blur(20px);
-  border: 1px solid #30363d;
-  border-radius: 0.75rem;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  
-  &:hover {
-    border-color: #58a6ff;
-    box-shadow: 0 0 30px rgba(88, 166, 255, 0.15);
-    transform: translateY(-5px);
-  }
-  
-  h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #e6edf3;
-    margin-bottom: 0.75rem;
-  }
-  
-  p {
-    color: #7d8590;
-    line-height: 1.6;
-    font-size: 0.9375rem;
-  }
-}
-
-.feature-icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  transition: transform 0.3s ease;
-  
-  i {
-    font-size: 1.5rem;
-  }
-  
-  &.primary {
-    background: rgba(37, 99, 235, 0.1);
-    color: #58a6ff;
-  }
-  
-  &.purple {
-    background: rgba(168, 85, 247, 0.1);
-    color: #a78bfa;
-  }
-  
-  &.cyan {
-    background: rgba(6, 182, 212, 0.1);
-    color: #22d3ee;
-  }
-  
-  &.green {
-    background: rgba(63, 185, 80, 0.1);
-    color: #3fb950;
-  }
-  
-  &.orange {
-    background: rgba(251, 146, 60, 0.1);
-    color: #fb923c;
-  }
-  
-  &.pink {
-    background: rgba(236, 72, 153, 0.1);
-    color: #ec4899;
-  }
-  
-  .feature-card:hover & {
-    transform: scale(1.1);
-  }
-}
-
-// Tech Stack Section
-.tech-stack-section {
-  padding: 6rem 2rem;
-  background: #0d1117;
-  border-top: 1px solid #30363d;
-  
-  @media (max-width: 768px) {
-    padding: 4rem 1rem;
-  }
-}
-
-.tech-grid {
-  max-width: 900px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.tech-item {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: rgba(22, 27, 34, 0.5);
-  border: 1px solid #30363d;
-  border-radius: 0.75rem;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    border-color: #484f58;
-    transform: translateY(-5px);
-  }
-}
-
-.tech-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.tech-name {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #e6edf3;
-  margin-bottom: 0.5rem;
-}
-
-.tech-desc {
-  font-size: 0.875rem;
-  color: #7d8590;
-}
-
-// CTA Section
-.cta-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-  border-top: 1px solid #30363d;
-  text-align: center;
-  
-  @media (max-width: 768px) {
-    padding: 4rem 1rem;
-  }
-}
-
-.cta-content {
-  max-width: 800px;
-  margin: 0 auto;
-  
-  h2 {
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    font-weight: 700;
-    color: #e6edf3;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    font-size: 1.25rem;
-    color: #7d8590;
-    margin-bottom: 2.5rem;
-  }
-}
-
-.cta-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  
-  @media (max-width: 480px) {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-// Footer
-.landing-footer {
-  background: #0d1117;
-  border-top: 1px solid #30363d;
-  padding: 4rem 2rem 2rem;
-  
-  @media (max-width: 768px) {
-    padding: 3rem 1rem 1.5rem;
-  }
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto 3rem;
-  display: grid;
-  grid-template-columns: 2fr 3fr;
-  gap: 4rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-}
-
-.footer-brand {
-  .footer-logo {
-    height: 32px;
-    width: auto;
-    margin-bottom: 1rem;
-  }
-  
-  p {
-    color: #7d8590;
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    max-width: 400px;
-  }
-}
-
-.footer-links {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.footer-column {
-  h4 {
-    color: #e6edf3;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    font-size: 0.9375rem;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    margin-bottom: 0.75rem;
-  }
-  
-  a {
-    color: #7d8590;
-    text-decoration: none;
-    font-size: 0.875rem;
-    transition: color 0.3s ease;
-    
-    &:hover {
-      color: #58a6ff;
-    }
-  }
-}
-
-.footer-bottom {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-top: 2rem;
-  border-top: 1px solid #30363d;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-  
-  p {
-    color: #7d8590;
-    font-size: 0.875rem;
-    margin: 0;
-  }
-}
-
-.status-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #7d8590;
-  font-size: 0.875rem;
-}
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #3fb950;
-  box-shadow: 0 0 10px rgba(63, 185, 80, 0.5);
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 36px; }
+  .mock-body { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .work-content { grid-template-columns: 1fr; }
+  .footer-content { grid-template-columns: 1fr; }
 }
 </style>
