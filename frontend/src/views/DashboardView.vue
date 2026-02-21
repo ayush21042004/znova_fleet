@@ -457,9 +457,27 @@ const loadDashboardData = async () => {
       : 0;
 
     const today = new Date().toISOString().split('T')[0];
-    stats.value.tripsToday = trips.filter((t: any) => t.scheduled_date?.startsWith(today)).length;
-    stats.value.completedTrips = trips.filter((t: any) => t.status === 'completed').length;
-    stats.value.activeTrips = trips.filter((t: any) => ['dispatched', 'in_progress'].includes(t.status)).length;
+    
+    // Trips Today: Count trips scheduled for today OR created today OR active today
+    const tripsToday = trips.filter((t: any) => {
+      // Check if scheduled for today
+      if (t.scheduled_date?.startsWith(today)) return true;
+      
+      // Check if created today
+      if (t.create_date?.startsWith(today)) return true;
+      
+      // Check if started today
+      if (t.start_time?.startsWith(today)) return true;
+      
+      // Check if completed today
+      if (t.end_time?.startsWith(today)) return true;
+      
+      return false;
+    });
+    
+    stats.value.tripsToday = tripsToday.length;
+    stats.value.completedTrips = tripsToday.filter((t: any) => t.status === 'completed').length;
+    stats.value.activeTrips = tripsToday.filter((t: any) => ['dispatched', 'in_progress'].includes(t.status)).length;
     stats.value.pendingCargo = trips.filter((t: any) => t.status === 'draft').length;
 
     // Calculate average miles per day from completed trips
